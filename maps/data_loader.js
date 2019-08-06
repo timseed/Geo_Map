@@ -4,7 +4,9 @@ let map = L.map('map', {
     zoom: 10
 });
 
-L.tileLayer( 'http://127.0.0.1/tile/{z}/{x}/{y}.png', {
+// L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+//L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+L.tileLayer( 'http://127.0.0.1:5000/tile/{z}/{x}/{y}.png', {
     attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>',
     subdomains: ['a', 'b', 'c']
 }).addTo( map )
@@ -21,7 +23,7 @@ let myIcon = L.icon({
 });
 
 function onEachFeature(feature, layer) {
-
+    console.log("Added");
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
         //layer.bindPopup(feature.properties.popupContent);
@@ -31,14 +33,15 @@ function onEachFeature(feature, layer) {
 
 function LoadMyData(){
     // Load the data
-    var json_data = $.getJSON("maps/data.markers.json", function (geojsonFeature) {
+    console.log("LoadMyData")
+    var json_data = $.getJSON("http://127.0.0.1:8080/data.json", function (geojsonFeature) {
         L.geoJSON(geojsonFeature, {
             onEachFeature: onEachFeature
         }).addTo(map);
+
     });
+    console.log("LoadMyData Ended")
 
 }
 
 setInterval(LoadMyData, 100 * 60); // Every 6 seconds
-
-
