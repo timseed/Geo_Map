@@ -24,6 +24,7 @@ let myIcon = L.icon({
 
 function onEachFeature(feature, layer) {
     console.log("Added");
+    layer.bindPopup("<h3>"+feature.properties['name']+"</h3>");
     // does this feature have a property named popupContent?
     if (feature.properties && feature.properties.popupContent) {
         //layer.bindPopup(feature.properties.popupContent);
@@ -34,14 +35,16 @@ function onEachFeature(feature, layer) {
 function LoadMyData(){
     // Load the data
     console.log("LoadMyData")
-    var json_data = $.getJSON("http://127.0.0.1:8080/data.json", function (geojsonFeature) {
+    var json_data;
+    json_data = $.getJSON("http://127.0.0.1:8080/data.json", function (geojsonFeature) {
+        var junk;
         L.geoJSON(geojsonFeature, {
             onEachFeature: onEachFeature
-        }).addTo(map);
+    }).addTo(map);
 
     });
     console.log("LoadMyData Ended")
 
 }
 
-setInterval(LoadMyData, 100 * 60); // Every 6 seconds
+setInterval(LoadMyData, 100 * 3); // Every 6 seconds
