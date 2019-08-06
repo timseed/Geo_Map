@@ -32,9 +32,15 @@ function onEachFeature(feature, layer) {
     }
 }
 
+function clear(feature, layer){
+    console.log("clear called");
+    //layer.removeControl(feature);
+}
+
+
 function LoadMyData(){
     // Load the data
-    console.log("LoadMyData")
+    console.log("LoadMyData");
     var json_data;
     json_data = $.getJSON("http://127.0.0.1:8080/data.json", function (geojsonFeature) {
         var junk;
